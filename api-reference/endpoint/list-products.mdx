@@ -1,0 +1,131 @@
+---
+title: "List Products"
+openapi: "GET /products"
+---
+
+Retrieve a paginated list of products. This endpoint returns an array of product objects with comprehensive data about each product.
+
+## Query Parameters
+
+<ParamField query="offset" type="integer" default="0">
+  Number of items to skip for pagination
+</ParamField>
+
+<ParamField query="limit" type="integer" default="10" min="1" max="100">
+  Maximum number of items to return per page
+</ParamField>
+
+## Response Example
+
+```json
+[
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440000",
+    "title": "1 oz Gold American Eagle",
+    "purity": "0.9167",
+    "weight": "1 oz",
+    "weightGrams": 31.1035,
+    "sku": "GOLD-AE-1OZ",
+    "isCertified": true,
+    "isIra": true,
+    "material": "gold",
+    "attributes": ["BU", "Coin", "Government Issued"],
+    "images": ["https://example.com/images/gold-eagle-1.jpg"],
+    "manufacturer": {
+      "title": "United States Mint",
+      "images": ["https://example.com/images/us-mint-logo.jpg"],
+      "isEsg": true
+    },
+    "category": {
+      "title": "Coins",
+      "isNumismatic": false
+    },
+    "subCategory": {
+      "title": "Government",
+      "premiumCalculationType": "percentage"
+    },
+    "certificateProvider": {
+      "title": "PCGS"
+    },
+    "variants": [
+      {
+        "title": "2023",
+        "highestOffer": {
+          "id": "550e8400-e29b-41d4-a716-446655440001",
+          "price": 2050.5,
+          "quantity": 5,
+          "spotPremium": 0.05,
+          "spotPremiumDollar": 97.64,
+          "expiresAt": "2023-12-31T23:59:59Z",
+          "createdAt": "2023-06-15T14:30:00Z",
+          "updatedAt": "2023-06-15T14:30:00Z"
+        },
+        "lowestListing": {
+          "id": "550e8400-e29b-41d4-a716-446655440002",
+          "price": 2075.25,
+          "quantity": 10,
+          "spotPremium": 0.07,
+          "spotPremiumDollar": 135.89,
+          "expiresAt": "2023-12-31T23:59:59Z",
+          "createdAt": "2023-06-15T12:15:00Z",
+          "updatedAt": "2023-06-15T12:15:00Z"
+        },
+        "images": ["https://example.com/images/gold-eagle-2023-1.jpg"]
+      }
+    ]
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440003",
+    "title": "1 oz Silver American Eagle",
+    "purity": "0.999",
+    "weight": "1 oz",
+    "weightGrams": 31.1035,
+    "sku": "SILVER-AE-1OZ",
+    "isCertified": false,
+    "isIra": true,
+    "material": "silver",
+    "attributes": ["BU", "Coin", "Government Issued"],
+    "images": ["https://example.com/images/silver-eagle-1.jpg"],
+    "manufacturer": {
+      "title": "United States Mint",
+      "images": ["https://example.com/images/us-mint-logo.jpg"],
+      "isEsg": true
+    },
+    "category": {
+      "title": "Coins",
+      "isNumismatic": false
+    },
+    "subCategory": {
+      "title": "Government",
+      "premiumCalculationType": "percentage"
+    },
+    "certificateProvider": null,
+    "variants": [
+      {
+        "title": "2023",
+        "highestOffer": {
+          "id": "550e8400-e29b-41d4-a716-446655440004",
+          "price": 28.5,
+          "quantity": 20,
+          "spotPremium": 0.15,
+          "spotPremiumDollar": 3.71,
+          "expiresAt": "2023-12-31T23:59:59Z",
+          "createdAt": "2023-06-15T14:30:00Z",
+          "updatedAt": "2023-06-15T14:30:00Z"
+        },
+        "lowestListing": {
+          "id": "550e8400-e29b-41d4-a716-446655440005",
+          "price": 29.75,
+          "quantity": 50,
+          "spotPremium": 0.2,
+          "spotPremiumDollar": 4.96,
+          "expiresAt": "2023-12-31T23:59:59Z",
+          "createdAt": "2023-06-15T12:15:00Z",
+          "updatedAt": "2023-06-15T12:15:00Z"
+        },
+        "images": ["https://example.com/images/silver-eagle-2023-1.jpg"]
+      }
+    ]
+  }
+]
+```

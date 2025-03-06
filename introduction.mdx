@@ -1,71 +1,66 @@
 ---
 title: Introduction
-description: "Welcome to the home of your new documentation"
+description: "Welcome to the Pure Public API Documentation"
 ---
 
-<img
-  className="block dark:hidden"
-  src="/images/hero-light.png"
-  alt="Hero Light"
-/>
-<img
-  className="hidden dark:block"
-  src="/images/hero-dark.png"
-  alt="Hero Dark"
-/>
+<img className="block" src="/images/hero.webp" alt="Hero" />
 
-## Setting up
+## Welcome to Pure's API
 
-The first step to world-class documentation is setting up your editing environments.
+The Pure Public API provides access to marketplace data including products, spot prices, and more. This API allows you to integrate Pure's precious metals marketplace data into your applications.
 
 <CardGroup cols={2}>
-  <Card
-    title="Edit Your Docs"
-    icon="pen-to-square"
-    href="https://mintlify.com/docs/quickstart"
-  >
-    Get your docs set up locally for easy development
+  <Card title="API Reference" icon="code" href="/api-reference/introduction">
+    Explore the available API endpoints
   </Card>
   <Card
-    title="Preview Changes"
-    icon="image"
-    href="https://mintlify.com/docs/development"
+    title="Authentication"
+    icon="lock"
+    href="/api-reference/introduction#authentication"
   >
-    Preview your changes before you push to make sure they're perfect
+    Learn how to authenticate your API requests
   </Card>
 </CardGroup>
 
-## Make it yours
+## Getting Started
 
-Update your docs to your brand and add valuable content for the best user conversion.
+To start using the Pure API, you'll need to:
+
+<Steps>
+  <Step title="Request an API Key">
+    Contact us at [collectpure.com](https://www.collectpure.com) to request an
+    API key for your application.
+  </Step>
+  <Step title="Include Your API Key">
+    Add your API key to the `x-api-key` header in all your requests.
+  </Step>
+  <Step title="Make Your First Request">
+    Try the [Authentication Test](/api-reference/endpoint/protected) endpoint to
+    verify your API key is working.
+  </Step>
+</Steps>
+
+## Available Data
+
+The Pure API gives you access to:
 
 <CardGroup cols={2}>
   <Card
-    title="Customize Style"
-    icon="palette"
-    href="https://mintlify.com/docs/settings/global"
+    title="Products"
+    icon="coins"
+    href="/api-reference/endpoint/list-products"
   >
-    Customize your docs to your company's colors and brands
+    Detailed information about precious metal products
   </Card>
   <Card
-    title="Reference APIs"
-    icon="code"
-    href="https://mintlify.com/docs/api-playground/openapi"
+    title="Spot Prices"
+    icon="chart-line"
+    href="/api-reference/endpoint/get-spot-prices"
   >
-    Automatically generate endpoints from an OpenAPI spec
-  </Card>
-  <Card
-    title="Add Components"
-    icon="screwdriver-wrench"
-    href="https://mintlify.com/docs/content/components/accordions"
-  >
-    Build interactive features and designs to guide your users
-  </Card>
-  <Card
-    title="Get Inspiration"
-    icon="stars"
-    href="https://mintlify.com/customers"
-  >
-    Check out our showcase of our favorite documentation
+    Current market prices for precious metals
   </Card>
 </CardGroup>
+
+## Support
+
+If you need assistance with the API, please contact our support team at [collectpure.com](https://www.collectpure.com).

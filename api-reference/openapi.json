@@ -1,94 +1,588 @@
 {
-  "openapi": "3.0.1",
+  "openapi": "3.1.0",
   "info": {
-    "title": "OpenAPI Plant Store",
-    "description": "A sample API that uses a plant store as an example to demonstrate features in the OpenAPI specification",
+    "title": "Pure Public API",
+    "description": "Public API for accessing Pure marketplace data including products, spot prices, and more",
+    "version": "1.0.0",
     "license": {
-      "name": "MIT"
-    },
-    "version": "1.0.0"
+      "name": "Proprietary"
+    }
   },
-  "servers": [
-    {
-      "url": "http://sandbox.mintlify.com"
-    }
-  ],
-  "security": [
-    {
-      "bearerAuth": []
-    }
-  ],
+  "components": {
+    "securitySchemes": {
+      "apiKey": {
+        "type": "apiKey",
+        "name": "x-api-key",
+        "in": "header",
+        "description": "API key for authentication"
+      }
+    },
+    "schemas": {}
+  },
   "paths": {
-    "/plants": {
+    "/product/{id}": {
       "get": {
-        "description": "Returns all plants from the system that the user has access to",
+        "summary": "Get a single product by ID",
+        "tags": ["products"],
+        "description": "Returns detailed information about a specific product",
         "parameters": [
           {
-            "name": "limit",
-            "in": "query",
-            "description": "The maximum number of results to return",
             "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
+              "type": "string"
+            },
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "Product ID"
+          }
+        ],
+        "security": [
+          {
+            "apiKey": []
           }
         ],
         "responses": {
           "200": {
-            "description": "Plant response",
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "description": "Product title"
+                    },
+                    "purity": {
+                      "type": "string",
+                      "description": "Purity of the precious metal"
+                    },
+                    "weight": {
+                      "type": "string",
+                      "description": "Weight with unit"
+                    },
+                    "weightGrams": {
+                      "type": "number",
+                      "description": "Weight in grams"
+                    },
+                    "sku": {
+                      "type": "string",
+                      "description": "Stock keeping unit"
+                    },
+                    "isCertified": {
+                      "type": "boolean",
+                      "description": "Whether the product is certified"
+                    },
+                    "isIra": {
+                      "type": "boolean",
+                      "description": "Whether the product is IRA eligible"
+                    },
+                    "material": {
+                      "type": "string",
+                      "description": "Material type"
+                    },
+                    "attributes": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "description": "Product attributes"
+                    },
+                    "images": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "description": "Product images URLs"
+                    },
+                    "manufacturer": {
+                      "type": "object",
+                      "properties": {
+                        "title": {
+                          "type": "string",
+                          "description": "Manufacturer name"
+                        },
+                        "images": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          },
+                          "description": "Manufacturer images URLs"
+                        },
+                        "isEsg": {
+                          "type": "boolean",
+                          "description": "Is ESG compliant"
+                        }
+                      },
+                      "description": "Product manufacturer information"
+                    },
+                    "category": {
+                      "type": "object",
+                      "properties": {
+                        "title": {
+                          "type": "string",
+                          "description": "Category name"
+                        },
+                        "isNumismatic": {
+                          "type": "boolean",
+                          "description": "Is numismatic"
+                        }
+                      },
+                      "description": "Product category information"
+                    },
+                    "subCategory": {
+                      "type": "object",
+                      "properties": {
+                        "title": {
+                          "type": "string",
+                          "description": "Subcategory name"
+                        },
+                        "premiumCalculationType": {
+                          "type": "string",
+                          "description": "Premium calculation type"
+                        }
+                      },
+                      "description": "Product subcategory information"
+                    },
+                    "certificateProvider": {
+                      "type": "object",
+                      "properties": {
+                        "title": {
+                          "type": "string",
+                          "description": "Certificate provider name"
+                        }
+                      },
+                      "description": "Certificate provider information"
+                    },
+                    "variants": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "title": {
+                            "type": "string",
+                            "description": "Variant title"
+                          },
+                          "highestOffer": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "format": "uuid",
+                                "description": "Offer ID"
+                              },
+                              "price": {
+                                "type": "number",
+                                "description": "Offer price"
+                              },
+                              "quantity": {
+                                "type": "integer",
+                                "description": "Offer quantity"
+                              },
+                              "spotPremium": {
+                                "type": "number",
+                                "description": "Spot premium"
+                              },
+                              "spotPremiumDollar": {
+                                "type": "number",
+                                "description": "Spot premium in dollars"
+                              },
+                              "expiresAt": {
+                                "type": "string",
+                                "format": "date-time",
+                                "description": "Expiration date"
+                              },
+                              "createdAt": {
+                                "type": "string",
+                                "format": "date-time",
+                                "description": "Creation date"
+                              },
+                              "updatedAt": {
+                                "type": "string",
+                                "format": "date-time",
+                                "description": "Last update date"
+                              }
+                            },
+                            "nullable": true,
+                            "description": "Highest offer for this variant"
+                          },
+                          "lowestListing": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "format": "uuid",
+                                "description": "Listing ID"
+                              },
+                              "price": {
+                                "type": "number",
+                                "description": "Listing price"
+                              },
+                              "quantity": {
+                                "type": "integer",
+                                "description": "Listing quantity"
+                              },
+                              "spotPremium": {
+                                "type": "number",
+                                "description": "Spot premium"
+                              },
+                              "spotPremiumDollar": {
+                                "type": "number",
+                                "description": "Spot premium in dollars"
+                              },
+                              "expiresAt": {
+                                "type": "string",
+                                "format": "date-time",
+                                "description": "Expiration date"
+                              },
+                              "createdAt": {
+                                "type": "string",
+                                "format": "date-time",
+                                "description": "Creation date"
+                              },
+                              "updatedAt": {
+                                "type": "string",
+                                "format": "date-time",
+                                "description": "Last update date"
+                              }
+                            },
+                            "nullable": true,
+                            "description": "Lowest listing for this variant"
+                          },
+                          "images": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            },
+                            "nullable": true,
+                            "description": "Variant-specific images"
+                          }
+                        }
+                      },
+                      "description": "Product variants"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/products/{ids}": {
+      "get": {
+        "summary": "Get multiple products by IDs",
+        "tags": ["products"],
+        "description": "Returns detailed information about multiple products specified by comma-separated IDs",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "ids",
+            "required": true,
+            "description": "Comma-separated list of product IDs"
+          }
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Plant"
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "format": "uuid",
+                        "description": "Unique product identifier"
+                      },
+                      "title": {
+                        "type": "string",
+                        "description": "Product title"
+                      },
+                      "purity": {
+                        "type": "string",
+                        "description": "Purity of the precious metal"
+                      },
+                      "weight": {
+                        "type": "string",
+                        "description": "Weight with unit"
+                      },
+                      "weightGrams": {
+                        "type": "number",
+                        "description": "Weight in grams"
+                      },
+                      "sku": {
+                        "type": "string",
+                        "description": "Stock keeping unit"
+                      },
+                      "isCertified": {
+                        "type": "boolean",
+                        "description": "Whether the product is certified"
+                      },
+                      "isIra": {
+                        "type": "boolean",
+                        "description": "Whether the product is IRA eligible"
+                      },
+                      "material": {
+                        "type": "string",
+                        "description": "Material type"
+                      },
+                      "attributes": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "description": "Product attributes"
+                      },
+                      "images": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "description": "Product images URLs"
+                      },
+                      "manufacturer": {
+                        "type": "object",
+                        "properties": {
+                          "title": {
+                            "type": "string",
+                            "description": "Manufacturer name"
+                          },
+                          "images": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            },
+                            "description": "Manufacturer images URLs"
+                          },
+                          "isEsg": {
+                            "type": "boolean",
+                            "description": "Is ESG compliant"
+                          }
+                        },
+                        "description": "Product manufacturer information"
+                      },
+                      "category": {
+                        "type": "object",
+                        "properties": {
+                          "title": {
+                            "type": "string",
+                            "description": "Category name"
+                          },
+                          "isNumismatic": {
+                            "type": "boolean",
+                            "description": "Is numismatic"
+                          }
+                        },
+                        "description": "Product category information"
+                      },
+                      "subCategory": {
+                        "type": "object",
+                        "properties": {
+                          "title": {
+                            "type": "string",
+                            "description": "Subcategory name"
+                          },
+                          "premiumCalculationType": {
+                            "type": "string",
+                            "description": "Premium calculation type"
+                          }
+                        },
+                        "description": "Product subcategory information"
+                      },
+                      "certificateProvider": {
+                        "type": "object",
+                        "properties": {
+                          "title": {
+                            "type": "string",
+                            "description": "Certificate provider name"
+                          }
+                        },
+                        "description": "Certificate provider information"
+                      },
+                      "variants": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "title": {
+                              "type": "string",
+                              "description": "Variant title"
+                            },
+                            "highestOffer": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string",
+                                  "format": "uuid",
+                                  "description": "Offer ID"
+                                },
+                                "price": {
+                                  "type": "number",
+                                  "description": "Offer price"
+                                },
+                                "quantity": {
+                                  "type": "integer",
+                                  "description": "Offer quantity"
+                                },
+                                "spotPremium": {
+                                  "type": "number",
+                                  "description": "Spot premium"
+                                },
+                                "spotPremiumDollar": {
+                                  "type": "number",
+                                  "description": "Spot premium in dollars"
+                                },
+                                "expiresAt": {
+                                  "type": "string",
+                                  "format": "date-time",
+                                  "description": "Expiration date"
+                                },
+                                "createdAt": {
+                                  "type": "string",
+                                  "format": "date-time",
+                                  "description": "Creation date"
+                                },
+                                "updatedAt": {
+                                  "type": "string",
+                                  "format": "date-time",
+                                  "description": "Last update date"
+                                }
+                              },
+                              "nullable": true,
+                              "description": "Highest offer for this variant"
+                            },
+                            "lowestListing": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string",
+                                  "format": "uuid",
+                                  "description": "Listing ID"
+                                },
+                                "price": {
+                                  "type": "number",
+                                  "description": "Listing price"
+                                },
+                                "quantity": {
+                                  "type": "integer",
+                                  "description": "Listing quantity"
+                                },
+                                "spotPremium": {
+                                  "type": "number",
+                                  "description": "Spot premium"
+                                },
+                                "spotPremiumDollar": {
+                                  "type": "number",
+                                  "description": "Spot premium in dollars"
+                                },
+                                "expiresAt": {
+                                  "type": "string",
+                                  "format": "date-time",
+                                  "description": "Expiration date"
+                                },
+                                "createdAt": {
+                                  "type": "string",
+                                  "format": "date-time",
+                                  "description": "Creation date"
+                                },
+                                "updatedAt": {
+                                  "type": "string",
+                                  "format": "date-time",
+                                  "description": "Last update date"
+                                }
+                              },
+                              "nullable": true,
+                              "description": "Lowest listing for this variant"
+                            },
+                            "images": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              },
+                              "nullable": true,
+                              "description": "Variant-specific images"
+                            }
+                          }
+                        },
+                        "description": "Product variants"
+                      }
+                    }
                   }
                 }
               }
             }
           },
           "400": {
-            "description": "Unexpected error",
+            "description": "Default Response",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        }
-      },
-      "post": {
-        "description": "Creates a new plant in the store",
-        "requestBody": {
-          "description": "Plant to add to the store",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/NewPlant"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "plant response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Plant"
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message"
+                    }
+                  }
                 }
               }
             }
           },
-          "400": {
-            "description": "unexpected error",
+          "500": {
+            "description": "Default Response",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Error"
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message"
+                    }
+                  }
                 }
               }
             }
@@ -96,32 +590,408 @@
         }
       }
     },
-    "/plants/{id}": {
-      "delete": {
-        "description": "Deletes a single plant based on the ID supplied",
+    "/products": {
+      "get": {
+        "summary": "List products with pagination",
+        "tags": ["products"],
+        "description": "Returns a paginated list of products",
         "parameters": [
           {
-            "name": "id",
-            "in": "path",
-            "description": "ID of plant to delete",
-            "required": true,
             "schema": {
               "type": "integer",
-              "format": "int64"
-            }
+              "default": 0,
+              "minimum": 0
+            },
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "description": "Number of items to skip"
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "default": 10,
+              "minimum": 1,
+              "maximum": 100
+            },
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "description": "Maximum number of items to return"
+          }
+        ],
+        "security": [
+          {
+            "apiKey": []
           }
         ],
         "responses": {
-          "204": {
-            "description": "Plant deleted",
-            "content": {}
-          },
-          "400": {
-            "description": "unexpected error",
+          "200": {
+            "description": "Default Response",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Error"
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "format": "uuid",
+                        "description": "Unique product identifier"
+                      },
+                      "title": {
+                        "type": "string",
+                        "description": "Product title"
+                      },
+                      "purity": {
+                        "type": "string",
+                        "description": "Purity of the precious metal"
+                      },
+                      "weight": {
+                        "type": "string",
+                        "description": "Weight with unit"
+                      },
+                      "weightGrams": {
+                        "type": "number",
+                        "description": "Weight in grams"
+                      },
+                      "sku": {
+                        "type": "string",
+                        "description": "Stock keeping unit"
+                      },
+                      "isCertified": {
+                        "type": "boolean",
+                        "description": "Whether the product is certified"
+                      },
+                      "isIra": {
+                        "type": "boolean",
+                        "description": "Whether the product is IRA eligible"
+                      },
+                      "material": {
+                        "type": "string",
+                        "description": "Material type"
+                      },
+                      "attributes": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "description": "Product attributes"
+                      },
+                      "images": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "description": "Product images URLs"
+                      },
+                      "manufacturer": {
+                        "type": "object",
+                        "properties": {
+                          "title": {
+                            "type": "string",
+                            "description": "Manufacturer name"
+                          },
+                          "images": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            },
+                            "description": "Manufacturer images URLs"
+                          },
+                          "isEsg": {
+                            "type": "boolean",
+                            "description": "Is ESG compliant"
+                          }
+                        },
+                        "description": "Product manufacturer information"
+                      },
+                      "category": {
+                        "type": "object",
+                        "properties": {
+                          "title": {
+                            "type": "string",
+                            "description": "Category name"
+                          },
+                          "isNumismatic": {
+                            "type": "boolean",
+                            "description": "Is numismatic"
+                          }
+                        },
+                        "description": "Product category information"
+                      },
+                      "subCategory": {
+                        "type": "object",
+                        "properties": {
+                          "title": {
+                            "type": "string",
+                            "description": "Subcategory name"
+                          },
+                          "premiumCalculationType": {
+                            "type": "string",
+                            "description": "Premium calculation type"
+                          }
+                        },
+                        "description": "Product subcategory information"
+                      },
+                      "certificateProvider": {
+                        "type": "object",
+                        "properties": {
+                          "title": {
+                            "type": "string",
+                            "description": "Certificate provider name"
+                          }
+                        },
+                        "description": "Certificate provider information"
+                      },
+                      "variants": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "title": {
+                              "type": "string",
+                              "description": "Variant title"
+                            },
+                            "highestOffer": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string",
+                                  "format": "uuid",
+                                  "description": "Offer ID"
+                                },
+                                "price": {
+                                  "type": "number",
+                                  "description": "Offer price"
+                                },
+                                "quantity": {
+                                  "type": "integer",
+                                  "description": "Offer quantity"
+                                },
+                                "spotPremium": {
+                                  "type": "number",
+                                  "description": "Spot premium"
+                                },
+                                "spotPremiumDollar": {
+                                  "type": "number",
+                                  "description": "Spot premium in dollars"
+                                },
+                                "expiresAt": {
+                                  "type": "string",
+                                  "format": "date-time",
+                                  "description": "Expiration date"
+                                },
+                                "createdAt": {
+                                  "type": "string",
+                                  "format": "date-time",
+                                  "description": "Creation date"
+                                },
+                                "updatedAt": {
+                                  "type": "string",
+                                  "format": "date-time",
+                                  "description": "Last update date"
+                                }
+                              },
+                              "nullable": true,
+                              "description": "Highest offer for this variant"
+                            },
+                            "lowestListing": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string",
+                                  "format": "uuid",
+                                  "description": "Listing ID"
+                                },
+                                "price": {
+                                  "type": "number",
+                                  "description": "Listing price"
+                                },
+                                "quantity": {
+                                  "type": "integer",
+                                  "description": "Listing quantity"
+                                },
+                                "spotPremium": {
+                                  "type": "number",
+                                  "description": "Spot premium"
+                                },
+                                "spotPremiumDollar": {
+                                  "type": "number",
+                                  "description": "Spot premium in dollars"
+                                },
+                                "expiresAt": {
+                                  "type": "string",
+                                  "format": "date-time",
+                                  "description": "Expiration date"
+                                },
+                                "createdAt": {
+                                  "type": "string",
+                                  "format": "date-time",
+                                  "description": "Creation date"
+                                },
+                                "updatedAt": {
+                                  "type": "string",
+                                  "format": "date-time",
+                                  "description": "Last update date"
+                                }
+                              },
+                              "nullable": true,
+                              "description": "Lowest listing for this variant"
+                            },
+                            "images": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              },
+                              "nullable": true,
+                              "description": "Variant-specific images"
+                            }
+                          }
+                        },
+                        "description": "Product variants"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/spot-prices": {
+      "get": {
+        "summary": "Get current spot prices for all materials",
+        "tags": ["marketplace"],
+        "description": "Returns the current spot prices, bid/ask spreads, and market status for all precious metals",
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Spot prices by material type",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "object",
+                    "properties": {
+                      "updatedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Last update timestamp"
+                      },
+                      "marketOpen": {
+                        "type": "boolean",
+                        "description": "Whether the market is open"
+                      },
+                      "bid": {
+                        "type": "number",
+                        "description": "Current bid price"
+                      },
+                      "ask": {
+                        "type": "number",
+                        "description": "Current ask price"
+                      },
+                      "changePercent": {
+                        "type": "number",
+                        "description": "Percentage change"
+                      },
+                      "changePrice": {
+                        "type": "number",
+                        "description": "Price change"
+                      }
+                    }
+                  },
+                  "description": "Spot prices by material type"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/protected": {
+      "get": {
+        "summary": "Protected endpoint requiring authentication",
+        "tags": ["auth"],
+        "description": "A test endpoint that requires a valid API key to access",
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "Success message"
+                    },
+                    "organizationId": {
+                      "type": "string",
+                      "format": "uuid",
+                      "description": "Organization ID from the API key"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message"
+                    }
+                  }
                 }
               }
             }
@@ -130,66 +1000,29 @@
       }
     }
   },
-  "components": {
-    "schemas": {
-      "Plant": {
-        "required": [
-          "name"
-        ],
-        "type": "object",
-        "properties": {
-          "name": {
-            "description": "The name of the plant",
-            "type": "string"
-          },
-          "tag": {
-            "description": "Tag to specify the type",
-            "type": "string"
-          }
-        }
-      },
-      "NewPlant": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/Plant"
-          },
-          {
-            "required": [
-              "id"
-            ],
-            "type": "object",
-            "properties": {
-              "id": {
-                "description": "Identification number of the plant",
-                "type": "integer",
-                "format": "int64"
-              }
-            }
-          }
-        ]
-      },
-      "Error": {
-        "required": [
-          "error",
-          "message"
-        ],
-        "type": "object",
-        "properties": {
-          "error": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "message": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "securitySchemes": {
-      "bearerAuth": {
-        "type": "http",
-        "scheme": "bearer"
-      }
+  "servers": [
+    {
+      "url": "https://public.api.collectpure.com/",
+      "description": "Production server"
     }
-  }
+  ],
+  "security": [
+    {
+      "apiKey": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "products",
+      "description": "Product related endpoints"
+    },
+    {
+      "name": "marketplace",
+      "description": "Marketplace data endpoints"
+    },
+    {
+      "name": "auth",
+      "description": "Authentication related endpoints"
+    }
+  ]
 }

@@ -1,0 +1,65 @@
+---
+title: "Get Spot Prices"
+openapi: "GET /spot-prices"
+---
+
+Retrieve current spot prices for all precious metals. This endpoint returns the current bid/ask prices, market status, and price changes for all supported materials.
+
+## Response Example
+
+```json
+{
+  "gold": {
+    "updatedAt": "2023-06-15T15:30:00Z",
+    "marketOpen": true,
+    "bid": 1952.8,
+    "ask": 1954.2,
+    "changePercent": 0.5,
+    "changePrice": 9.75
+  },
+  "silver": {
+    "updatedAt": "2023-06-15T15:30:00Z",
+    "marketOpen": true,
+    "bid": 24.75,
+    "ask": 24.85,
+    "changePercent": 0.8,
+    "changePrice": 0.2
+  },
+  "platinum": {
+    "updatedAt": "2023-06-15T15:30:00Z",
+    "marketOpen": true,
+    "bid": 985.5,
+    "ask": 988.0,
+    "changePercent": -0.3,
+    "changePrice": -3.0
+  },
+  "palladium": {
+    "updatedAt": "2023-06-15T15:30:00Z",
+    "marketOpen": true,
+    "bid": 1245.0,
+    "ask": 1250.0,
+    "changePercent": -1.2,
+    "changePrice": -15.25
+  }
+}
+```
+
+## Understanding Spot Prices
+
+Spot prices represent the current market price at which a precious metal can be bought or sold for immediate delivery. The API provides both bid and ask prices:
+
+- **Bid Price**: The price at which buyers are willing to purchase the metal
+- **Ask Price**: The price at which sellers are willing to sell the metal
+
+The difference between the ask and bid prices is known as the spread, which represents the dealer's profit margin.
+
+## Market Status
+
+The `marketOpen` field indicates whether the market for that particular metal is currently open for trading. Markets typically operate Sunday through Friday but may close for holidays or other special circumstances.
+
+## Price Changes
+
+The API provides two metrics for tracking price changes:
+
+- **changePercent**: Percentage change in price from the previous day's close
+- **changePrice**: Absolute price change from the previous day's close (in USD)

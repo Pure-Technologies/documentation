@@ -1,33 +1,32 @@
 ---
-title: 'Introduction'
-description: 'Example section for showcasing API endpoints'
+title: "Introduction"
+description: "Pure Public API for accessing marketplace data"
 ---
 
-<Note>
-  If you're not looking to build API reference documentation, you can delete
-  this section by removing the api-reference folder.
-</Note>
+## Welcome to the Pure Public API
 
-## Welcome
-
-There are two ways to build API documentation: [OpenAPI](https://mintlify.com/docs/api-playground/openapi/setup) and [MDX components](https://mintlify.com/docs/api-playground/mdx/configuration). For the starter kit, we are using the following OpenAPI specification.
-
-<Card
-  title="Plant Store Endpoints"
-  icon="leaf"
-  href="https://github.com/mintlify/starter/blob/main/api-reference/openapi.json"
->
-  View the OpenAPI specification file
-</Card>
+The Pure Public API provides access to marketplace data including products, spot prices, and more. This API allows you to integrate Pure's marketplace data into your applications.
 
 ## Authentication
 
-All API endpoints are authenticated using Bearer tokens and picked up from the specification file.
+All API endpoints are authenticated using API keys. You need to include your API key in the `x-api-key` header with each request.
 
 ```json
-"security": [
-  {
-    "bearerAuth": []
-  }
-]
+"x-api-key": "00000000-0000-0000-0000-000000000000"
 ```
+
+## Base URL
+
+All API requests should be made to the following base URL:
+
+```
+https://public.api.collectpure.com/
+```
+
+## Response Format
+
+All responses are returned in JSON format. Successful responses will contain the requested data, while error responses will include an `error` field with a description of what went wrong.
+
+## Rate Limits
+
+Please contact us at [collectpure.com](https://www.collectpure.com) for information about rate limits for your API key.
