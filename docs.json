@@ -61,8 +61,8 @@
     }
   },
   "logo": {
-    "light": "/logo/black-text.png",
-    "dark": "/logo/white-text.png"
+    "light": "/logo/green.svg",
+    "dark": "/logo/green.svg"
   },
   "navbar": {
     "links": [
@@ -74,7 +74,7 @@
     "primary": {
       "type": "button",
       "label": "Dashboard",
-      "href": "https://dashboard.collectpure.com"
+      "href": "https://www.collectpure.com/dashboard"
     }
   },
   "footer": {
