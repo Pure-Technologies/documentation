@@ -23,6 +23,12 @@ All API requests should be made to the following base URL:
 https://public.api.collectpure.com/
 ```
 
+We are currently on version 1 of the API, and requests must include the version in the path. For example:
+
+```
+https://public.api.collectpure.com/v1/products
+```
+
 ## Response Format
 
 All responses are returned in JSON format. Successful responses will contain the requested data, while error responses will include an `error` field with a description of what went wrong.

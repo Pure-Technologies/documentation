@@ -17,7 +17,7 @@ Before you begin, make sure you have:
 All API requests require authentication using your API key. Include your key in the `x-api-key` header with each request:
 
 ```bash
-curl -X GET "https://public.api.collectpure.com/protected" \
+curl -X GET "https://public.api.collectpure.com/v1/protected" \
   -H "x-api-key: YOUR_API_KEY"
 ```
 
@@ -26,7 +26,7 @@ curl -X GET "https://public.api.collectpure.com/protected" \
 Let's verify your API key is working by making a request to the authentication test endpoint:
 
 ```bash
-curl -X GET "https://public.api.collectpure.com/protected" \
+curl -X GET "https://public.api.collectpure.com/v1/protected" \
   -H "x-api-key: YOUR_API_KEY"
 ```
 
@@ -44,7 +44,7 @@ If successful, you should receive a response like:
 To retrieve current spot prices for precious metals:
 
 ```bash
-curl -X GET "https://public.api.collectpure.com/spot-prices" \
+curl -X GET "https://public.api.collectpure.com/v1/spot-prices" \
   -H "x-api-key: YOUR_API_KEY"
 ```
 
@@ -57,7 +57,7 @@ This will return the current bid/ask prices and market status for all supported 
 To retrieve information about a specific product:
 
 ```bash
-curl -X GET "https://public.api.collectpure.com/product/PRODUCT_ID" \
+curl -X GET "https://public.api.collectpure.com/v1/product/PRODUCT_ID" \
   -H "x-api-key: YOUR_API_KEY"
 ```
 
@@ -68,7 +68,7 @@ Replace `PRODUCT_ID` with the actual ID of the product you want to retrieve.
 To retrieve a paginated list of products:
 
 ```bash
-curl -X GET "https://public.api.collectpure.com/products?offset=0&limit=10" \
+curl -X GET "https://public.api.collectpure.com/v1/products?offset=0&limit=10" \
   -H "x-api-key: YOUR_API_KEY"
 ```
 
@@ -86,7 +86,7 @@ const BASE_URL = "https://public.api.collectpure.com";
 
 async function getSpotPrices() {
   try {
-    const response = await axios.get(`${BASE_URL}/spot-prices`, {
+    const response = await axios.get(`${BASE_URL}/v1/spot-prices`, {
       headers: {
         "x-api-key": API_KEY,
       },
@@ -113,7 +113,7 @@ def get_spot_prices():
     headers = {
         'x-api-key': API_KEY
     }
-    response = requests.get(f'{BASE_URL}/spot-prices', headers=headers)
+    response = requests.get(f'{BASE_URL}/v1/spot-prices', headers=headers)
 
     if response.status_code == 200:
         return response.json()

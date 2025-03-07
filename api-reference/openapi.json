@@ -2,7 +2,7 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Pure Public API",
-    "description": "Public API for accessing Pure marketplace data including products, spot prices, and more",
+    "description": "Public API for accessing Pure marketplace data including products, spot prices, and more.",
     "version": "1.0.0",
     "license": {
       "name": "Proprietary"
@@ -20,7 +20,7 @@
     "schemas": {}
   },
   "paths": {
-    "/product/{id}": {
+    "/v1/product/{id}": {
       "get": {
         "summary": "Get a single product by ID",
         "tags": ["products"],
@@ -301,7 +301,7 @@
         }
       }
     },
-    "/products/{ids}": {
+    "/v1/products/{ids}": {
       "get": {
         "summary": "Get multiple products by IDs",
         "tags": ["products"],
@@ -590,7 +590,7 @@
         }
       }
     },
-    "/products": {
+    "/v1/products": {
       "get": {
         "summary": "List products with pagination",
         "tags": ["products"],
@@ -877,7 +877,7 @@
         }
       }
     },
-    "/spot-prices": {
+    "/v1/spot-prices": {
       "get": {
         "summary": "Get current spot prices for all materials",
         "tags": ["marketplace"],
@@ -948,7 +948,7 @@
         }
       }
     },
-    "/protected": {
+    "/v1/protected": {
       "get": {
         "summary": "Protected endpoint requiring authentication",
         "tags": ["auth"],
