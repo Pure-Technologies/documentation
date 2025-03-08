@@ -1,0 +1,74 @@
+---
+title: "Get Product by SKU"
+openapi: "GET /v1/product/sku/{sku}"
+---
+
+Retrieve detailed information about a specific product by its SKU (Stock Keeping Unit). This endpoint returns comprehensive data about the product including its attributes, manufacturer information, category details, and current market data.
+
+## Response Example
+
+```json
+{
+  "id": "550e8400-e29b-41d4-a716-446655440000",
+  "title": "2006 20th Anniversary American Silver Eagle 3-Coin Set (w/Box & COA)",
+  "purity": "0.999",
+  "weight": "3 Troy Ounce",
+  "weightGrams": 93.33,
+  "sku": "2006-20th-anniversary-american-silver-eagle-3coin-set-wbox--coa-000421",
+  "isCertified": false,
+  "isIra": true,
+  "material": "Silver",
+  "attributes": [
+    "Certificate of Authenticity (COA)",
+    "Original Box",
+    "Pure Qualified"
+  ],
+  "images": [
+    "https://da1pgb6vxig66.cloudfront.net/product-images/Certified+Moderns/2006+ASE+Set.png"
+  ],
+  "manufacturer": {
+    "title": "United States Mint",
+    "images": [
+      "https://da1pgb6vxig66.cloudfront.net/product-images/Mint+Logos/Mint.png"
+    ],
+    "isEsg": false
+  },
+  "category": {
+    "title": "US Mint Releases",
+    "isNumismatic": true
+  },
+  "subCategory": {
+    "title": "Proof American Silver Eagles",
+    "premiumCalculationType": "unit"
+  },
+  "certificateProvider": {
+    "title": ""
+  },
+  "variants": [
+    {
+      "title": "Pure Qualified",
+      "highestOffer": {
+        "id": "014f649b-9682-48d6-a2c3-039b9408b73b",
+        "price": 160,
+        "quantity": 2,
+        "spotPremium": 63.4964423916704,
+        "spotPremiumDollar": 62.14,
+        "expiresAt": "2025-03-06T21:57:28.941834+00:00",
+        "createdAt": "2024-06-28T01:58:28.515655+00:00",
+        "updatedAt": "2025-03-06T21:55:51.537528+00:00"
+      },
+      "lowestListing": {
+        "id": "beb4558c-5e62-4418-b22b-7620c009f6fc",
+        "price": 239.99,
+        "quantity": 7,
+        "spotPremium": 144.484721901617,
+        "spotPremiumDollar": 141.83,
+        "expiresAt": "2025-03-06T21:57:28.941834+00:00",
+        "createdAt": "2024-06-28T12:19:11.424989+00:00",
+        "updatedAt": "2025-03-06T21:55:51.537528+00:00"
+      },
+      "images": null
+    }
+  ]
+}
+```

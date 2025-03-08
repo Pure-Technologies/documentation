@@ -1,0 +1,23 @@
+---
+title: "Get Certificate Providers"
+openapi: "GET /v1/products/certificate-providers"
+---
+
+Retrieve a list of all certificate providers available in the Pure marketplace. This endpoint returns the ID, title, and code for each certificate provider.
+
+## Response Example
+
+```json
+[
+  {
+    "id": 2,
+    "title": "NGC",
+    "code": "NGC"
+  },
+  {
+    "id": 1,
+    "title": "PCGS",
+    "code": "PCGS"
+  }
+]
+```

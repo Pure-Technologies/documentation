@@ -592,9 +592,9 @@
     },
     "/v1/products": {
       "get": {
-        "summary": "List products with pagination",
+        "summary": "List products with pagination and filtering",
         "tags": ["products"],
-        "description": "Returns a paginated list of products",
+        "description": "Returns a paginated and filtered list of products",
         "parameters": [
           {
             "schema": {
@@ -618,6 +618,99 @@
             "name": "limit",
             "required": false,
             "description": "Maximum number of items to return"
+          },
+          {
+            "schema": {
+              "type": "integer"
+            },
+            "in": "query",
+            "name": "categoryId",
+            "required": false,
+            "description": "Filter by category ID"
+          },
+          {
+            "schema": {
+              "type": "integer"
+            },
+            "in": "query",
+            "name": "subCategoryId",
+            "required": false,
+            "description": "Filter by subcategory ID"
+          },
+          {
+            "schema": {
+              "type": "integer"
+            },
+            "in": "query",
+            "name": "certificateProviderId",
+            "required": false,
+            "description": "Filter by certificate provider ID"
+          },
+          {
+            "schema": {
+              "type": "integer"
+            },
+            "in": "query",
+            "name": "manufacturerId",
+            "required": false,
+            "description": "Filter by manufacturer ID"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "attributeIds",
+            "required": false,
+            "description": "Filter by attribute IDs (comma-separated list)"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "Gold",
+                "Silver",
+                "Platinum",
+                "Palladium",
+                "Bitcoin",
+                "gold",
+                "silver",
+                "platinum",
+                "palladium",
+                "bitcoin"
+              ]
+            },
+            "in": "query",
+            "name": "material",
+            "required": false,
+            "description": "Filter by material (case-insensitive: Gold, Silver, Platinum, Palladium, Bitcoin)"
+          },
+          {
+            "schema": {
+              "type": "boolean"
+            },
+            "in": "query",
+            "name": "isCertified",
+            "required": false,
+            "description": "Filter by certification status"
+          },
+          {
+            "schema": {
+              "type": "boolean"
+            },
+            "in": "query",
+            "name": "isIra",
+            "required": false,
+            "description": "Filter by IRA eligibility"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "title",
+            "required": false,
+            "description": "Search in product title (full-text search)"
           }
         ],
         "security": [
@@ -877,6 +970,629 @@
         }
       }
     },
+    "/v1/product/sku/{sku}": {
+      "get": {
+        "summary": "Get a single product by SKU",
+        "tags": ["products"],
+        "description": "Returns detailed information about a specific product using its SKU",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "sku",
+            "required": true,
+            "description": "Product SKU"
+          }
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "format": "uuid",
+                      "description": "Unique product identifier"
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Product title"
+                    },
+                    "purity": {
+                      "type": "string",
+                      "description": "Purity of the precious metal"
+                    },
+                    "weight": {
+                      "type": "string",
+                      "description": "Weight with unit"
+                    },
+                    "weightGrams": {
+                      "type": "number",
+                      "description": "Weight in grams"
+                    },
+                    "sku": {
+                      "type": "string",
+                      "description": "Stock keeping unit"
+                    },
+                    "isCertified": {
+                      "type": "boolean",
+                      "description": "Whether the product is certified"
+                    },
+                    "isIra": {
+                      "type": "boolean",
+                      "description": "Whether the product is IRA eligible"
+                    },
+                    "material": {
+                      "type": "string",
+                      "description": "Material type"
+                    },
+                    "attributes": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "description": "Product attributes"
+                    },
+                    "images": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "description": "Product images"
+                    },
+                    "manufacturer": {
+                      "type": "object",
+                      "properties": {
+                        "title": {
+                          "type": "string",
+                          "description": "Manufacturer name"
+                        },
+                        "images": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          },
+                          "description": "Manufacturer images"
+                        },
+                        "isEsg": {
+                          "type": "boolean",
+                          "description": "Whether the manufacturer is ESG compliant"
+                        }
+                      },
+                      "nullable": true,
+                      "description": "Product manufacturer"
+                    },
+                    "category": {
+                      "type": "object",
+                      "properties": {
+                        "title": {
+                          "type": "string",
+                          "description": "Category name"
+                        },
+                        "isNumismatic": {
+                          "type": "boolean",
+                          "description": "Whether the category is numismatic"
+                        }
+                      },
+                      "nullable": true,
+                      "description": "Product category"
+                    },
+                    "subCategory": {
+                      "type": "object",
+                      "properties": {
+                        "title": {
+                          "type": "string",
+                          "description": "Subcategory name"
+                        },
+                        "premiumCalculationType": {
+                          "type": "string",
+                          "description": "Premium calculation type"
+                        }
+                      },
+                      "nullable": true,
+                      "description": "Product subcategory"
+                    },
+                    "certificateProvider": {
+                      "type": "object",
+                      "properties": {
+                        "title": {
+                          "type": "string",
+                          "description": "Certificate provider name"
+                        }
+                      },
+                      "nullable": true,
+                      "description": "Certificate provider"
+                    },
+                    "variants": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "title": {
+                            "type": "string",
+                            "description": "Variant title"
+                          },
+                          "highestOffer": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "format": "uuid",
+                                "description": "Offer ID"
+                              },
+                              "price": {
+                                "type": "number",
+                                "description": "Offer price"
+                              },
+                              "quantity": {
+                                "type": "number",
+                                "description": "Offer quantity"
+                              },
+                              "spotPremium": {
+                                "type": "number",
+                                "description": "Spot premium percentage"
+                              },
+                              "spotPremiumDollar": {
+                                "type": "number",
+                                "description": "Spot premium in dollars"
+                              },
+                              "expiresAt": {
+                                "type": "string",
+                                "format": "date-time",
+                                "description": "Expiration date"
+                              },
+                              "createdAt": {
+                                "type": "string",
+                                "format": "date-time",
+                                "description": "Creation date"
+                              },
+                              "updatedAt": {
+                                "type": "string",
+                                "format": "date-time",
+                                "description": "Last update date"
+                              }
+                            },
+                            "nullable": true,
+                            "description": "Highest offer for this variant"
+                          },
+                          "lowestListing": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "format": "uuid",
+                                "description": "Listing ID"
+                              },
+                              "price": {
+                                "type": "number",
+                                "description": "Listing price"
+                              },
+                              "quantity": {
+                                "type": "number",
+                                "description": "Listing quantity"
+                              },
+                              "spotPremium": {
+                                "type": "number",
+                                "description": "Spot premium percentage"
+                              },
+                              "spotPremiumDollar": {
+                                "type": "number",
+                                "description": "Spot premium in dollars"
+                              },
+                              "expiresAt": {
+                                "type": "string",
+                                "format": "date-time",
+                                "description": "Expiration date"
+                              },
+                              "createdAt": {
+                                "type": "string",
+                                "format": "date-time",
+                                "description": "Creation date"
+                              },
+                              "updatedAt": {
+                                "type": "string",
+                                "format": "date-time",
+                                "description": "Last update date"
+                              }
+                            },
+                            "nullable": true,
+                            "description": "Lowest listing for this variant"
+                          },
+                          "images": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            },
+                            "nullable": true,
+                            "description": "Variant-specific images"
+                          }
+                        }
+                      },
+                      "description": "Product variants"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/products/categories": {
+      "get": {
+        "summary": "Get all product categories",
+        "tags": ["products"],
+        "description": "Returns a list of all product categories with their IDs and titles",
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer",
+                        "description": "Category ID"
+                      },
+                      "title": {
+                        "type": "string",
+                        "description": "Category title"
+                      },
+                      "isNumismatic": {
+                        "type": "boolean",
+                        "description": "Whether the category is numismatic"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/products/subcategories": {
+      "get": {
+        "summary": "Get all product subcategories",
+        "tags": ["products"],
+        "description": "Returns a list of all product subcategories with their IDs and titles",
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer",
+                        "description": "Subcategory ID"
+                      },
+                      "title": {
+                        "type": "string",
+                        "description": "Subcategory title"
+                      },
+                      "premiumCalculationType": {
+                        "type": "string",
+                        "description": "Premium calculation type"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/products/manufacturers": {
+      "get": {
+        "summary": "Get all product manufacturers",
+        "tags": ["products"],
+        "description": "Returns a list of all product manufacturers with their IDs and titles",
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer",
+                        "description": "Manufacturer ID"
+                      },
+                      "title": {
+                        "type": "string",
+                        "description": "Manufacturer title"
+                      },
+                      "isEsg": {
+                        "type": "boolean",
+                        "description": "Whether the manufacturer is ESG compliant"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/products/certificate-providers": {
+      "get": {
+        "summary": "Get all certificate providers",
+        "tags": ["products"],
+        "description": "Returns a list of all certificate providers with their IDs and titles",
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer",
+                        "description": "Certificate provider ID"
+                      },
+                      "title": {
+                        "type": "string",
+                        "description": "Certificate provider title"
+                      },
+                      "code": {
+                        "type": "string",
+                        "description": "Certificate provider code"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/products/attributes": {
+      "get": {
+        "summary": "Get all product attributes",
+        "tags": ["products"],
+        "description": "Returns a list of all product attributes with their IDs and titles",
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer",
+                        "description": "Attribute ID"
+                      },
+                      "title": {
+                        "type": "string",
+                        "description": "Attribute title"
+                      },
+                      "type": {
+                        "type": "string",
+                        "description": "Attribute type"
+                      },
+                      "description": {
+                        "type": "string",
+                        "description": "Attribute description"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/products/materials": {
+      "get": {
+        "summary": "Get all product materials",
+        "tags": ["products"],
+        "description": "Returns a list of all product materials",
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "description": "Material name"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/v1/spot-prices": {
       "get": {
         "summary": "Get current spot prices for all materials",
@@ -925,6 +1641,291 @@
                     }
                   },
                   "description": "Spot prices by material type"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/order/{id}": {
+      "get": {
+        "summary": "Get a purchase order by ID",
+        "tags": ["orders"],
+        "description": "Returns detailed information about a specific purchase order",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "Order ID"
+          }
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "description": "Order status"
+                    },
+                    "subtotal": {
+                      "type": "number",
+                      "description": "Order subtotal in dollars"
+                    },
+                    "total": {
+                      "type": "number",
+                      "description": "Order total in dollars"
+                    },
+                    "salesTax": {
+                      "type": "number",
+                      "description": "Sales tax in dollars"
+                    },
+                    "currency": {
+                      "type": "string",
+                      "description": "Currency code"
+                    },
+                    "processingFee": {
+                      "type": "number",
+                      "description": "Processing fee in dollars"
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Creation timestamp"
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Last update timestamp"
+                    },
+                    "shippingLabelUrl": {
+                      "type": "string",
+                      "description": "URL to shipping label"
+                    },
+                    "payoutMethod": {
+                      "type": "string",
+                      "description": "Method of payout"
+                    },
+                    "lineItems": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "number",
+                            "description": "Line item ID"
+                          },
+                          "productId": {
+                            "type": "string",
+                            "format": "uuid",
+                            "description": "Product ID"
+                          },
+                          "productTitle": {
+                            "type": "string",
+                            "description": "Product title"
+                          },
+                          "variantTitle": {
+                            "type": "string",
+                            "description": "Variant title"
+                          },
+                          "price": {
+                            "type": "number",
+                            "description": "Price in dollars"
+                          },
+                          "quantity": {
+                            "type": "number",
+                            "description": "Quantity"
+                          },
+                          "status": {
+                            "type": "string",
+                            "description": "Line item status"
+                          },
+                          "spotPremium": {
+                            "type": "number",
+                            "description": "Spot premium percentage"
+                          },
+                          "spotPremiumDollar": {
+                            "type": "number",
+                            "description": "Spot premium in dollars"
+                          }
+                        }
+                      },
+                      "description": "Order line items"
+                    },
+                    "trackers": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "status": {
+                            "type": "string",
+                            "description": "Tracker status"
+                          },
+                          "weight": {
+                            "type": "number",
+                            "description": "Package weight"
+                          },
+                          "carrier": {
+                            "type": "string",
+                            "description": "Shipping carrier"
+                          },
+                          "delivered": {
+                            "type": "boolean",
+                            "description": "Whether package is delivered"
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "format": "date-time",
+                            "description": "Creation timestamp"
+                          },
+                          "lineItems": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "number",
+                                  "description": "Line item ID"
+                                },
+                                "quantity": {
+                                  "type": "number",
+                                  "description": "Quantity"
+                                }
+                              }
+                            },
+                            "description": "Line items in this shipment"
+                          },
+                          "updatedAt": {
+                            "type": "string",
+                            "format": "date-time",
+                            "description": "Last update timestamp"
+                          },
+                          "totalValue": {
+                            "type": "number",
+                            "description": "Total value of shipment in dollars"
+                          },
+                          "statusDetail": {
+                            "type": "string",
+                            "description": "Detailed status information"
+                          },
+                          "trackingCode": {
+                            "type": "string",
+                            "description": "Tracking code"
+                          },
+                          "service": {
+                            "type": "string",
+                            "description": "Shipping service level"
+                          },
+                          "containerType": {
+                            "type": "string",
+                            "description": "Type of shipping container"
+                          },
+                          "estDeliveryDate": {
+                            "type": "string",
+                            "description": "Estimated delivery date"
+                          },
+                          "currentLocation": {
+                            "type": "string",
+                            "description": "Current package location"
+                          }
+                        }
+                      },
+                      "description": "Shipment trackers"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message"
+                    }
+                  }
                 }
               }
             }

@@ -1,0 +1,28 @@
+---
+title: "Get Product Subcategories"
+openapi: "GET /v1/products/subcategories"
+---
+
+Retrieve a list of all product subcategories available in the Pure marketplace. This endpoint returns the ID, title, and premium calculation type for each subcategory.
+
+## Response Example
+
+```json
+[
+  {
+    "id": 1,
+    "title": "Mexican Gold Libertads",
+    "premiumCalculationType": "unit"
+  },
+  {
+    "id": 2,
+    "title": "Gold Bars (Gram Weight)",
+    "premiumCalculationType": "unit"
+  },
+  {
+    "id": 3,
+    "title": "Mixed Denominations",
+    "premiumCalculationType": "troy_ounce"
+  }
+]
+```

@@ -1,0 +1,25 @@
+---
+title: "Get Product Attributes"
+openapi: "GET /v1/products/attributes"
+---
+
+Retrieve a list of all product attributes available in the Pure marketplace. This endpoint returns the ID, title, type, and description for each attribute.
+
+## Response Example
+
+```json
+[
+  {
+    "id": 1,
+    "title": "Certificate of Authenticity (COA)",
+    "type": "includes",
+    "description": "Original paper COA with numbering, and government seal"
+  },
+  {
+    "id": 2,
+    "title": "Original Box",
+    "type": "includes",
+    "description": "Original government box with inner and outer casing"
+  }
+]
+```

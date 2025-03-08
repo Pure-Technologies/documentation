@@ -1,0 +1,83 @@
+---
+title: "Get Product Categories"
+openapi: "GET /v1/products/categories"
+---
+
+Retrieve a list of all product categories available in the Pure marketplace. This endpoint returns the ID, title, and numismatic status for each category.
+
+## Response Example
+
+```json
+[
+  {
+    "id": 1,
+    "title": "Bullion",
+    "isNumismatic": false
+  },
+  {
+    "id": 11,
+    "title": "Bullion Certified",
+    "isNumismatic": true
+  },
+  {
+    "id": 13,
+    "title": "GSA Silver Dollars",
+    "isNumismatic": true
+  },
+  {
+    "id": 4,
+    "title": "Junk Silver",
+    "isNumismatic": true
+  },
+  {
+    "id": 15,
+    "title": "Mystery Boxes",
+    "isNumismatic": true
+  },
+  {
+    "id": 9,
+    "title": "Pre-1933 Gold Certified",
+    "isNumismatic": true
+  },
+  {
+    "id": 2,
+    "title": "Pre-1933 Gold Raw",
+    "isNumismatic": true
+  },
+  {
+    "id": 6,
+    "title": "Scrap Gold",
+    "isNumismatic": false
+  },
+  {
+    "id": 10,
+    "title": "Silver Dollars Certified",
+    "isNumismatic": true
+  },
+  {
+    "id": 3,
+    "title": "Silver Dollars Raw",
+    "isNumismatic": true
+  },
+  {
+    "id": 14,
+    "title": "US Currency",
+    "isNumismatic": false
+  },
+  {
+    "id": 5,
+    "title": "US Mint Releases",
+    "isNumismatic": true
+  },
+  {
+    "id": 12,
+    "title": "US Mint Releases Certified",
+    "isNumismatic": true
+  },
+  {
+    "id": 7,
+    "title": "Vintage World Gold",
+    "isNumismatic": true
+  }
+]
+```

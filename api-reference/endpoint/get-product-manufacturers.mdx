@@ -1,0 +1,33 @@
+---
+title: "Get Product Manufacturers"
+openapi: "GET /v1/products/manufacturers"
+---
+
+Retrieve a list of all product manufacturers available in the Pure marketplace. This endpoint returns the ID, title, and ESG compliance status for each manufacturer.
+
+## Response Example
+
+```json
+[
+  {
+    "id": 1,
+    "title": "United States Mint",
+    "isEsg": false
+  },
+  {
+    "id": 2,
+    "title": "Royal Canadian Mint",
+    "isEsg": true
+  },
+  {
+    "id": 3,
+    "title": "Perth Mint",
+    "isEsg": true
+  },
+  {
+    "id": 4,
+    "title": "PAMP Suisse",
+    "isEsg": true
+  }
+]
+```

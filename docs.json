@@ -30,13 +30,24 @@
             "group": "Products",
             "pages": [
               "api-reference/endpoint/get-product",
+              "api-reference/endpoint/get-product-by-sku",
               "api-reference/endpoint/get-products-by-ids",
-              "api-reference/endpoint/list-products"
+              "api-reference/endpoint/list-products",
+              "api-reference/endpoint/get-product-categories",
+              "api-reference/endpoint/get-product-subcategories",
+              "api-reference/endpoint/get-product-manufacturers",
+              "api-reference/endpoint/get-certificate-providers",
+              "api-reference/endpoint/get-product-attributes",
+              "api-reference/endpoint/get-product-materials"
             ]
           },
           {
             "group": "Marketplace",
             "pages": ["api-reference/endpoint/get-spot-prices"]
+          },
+          {
+            "group": "Orders",
+            "pages": ["api-reference/endpoint/get-order"]
           },
           {
             "group": "Authentication",

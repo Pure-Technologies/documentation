@@ -1,0 +1,74 @@
+---
+title: "Get Purchase Order"
+openapi: "GET /v1/order/{id}"
+---
+
+Retrieve detailed information about a specific purchase order by its ID. This endpoint returns comprehensive data about the order including its status, financial details, line items, and shipping information.
+
+## Response Example
+
+```json
+{
+  "status": "order_complete",
+  "subtotal": 1599.98,
+  "total": 1699.98,
+  "salesTax": 0,
+  "currency": "USD",
+  "processingFee": 100,
+  "createdAt": "2024-03-01T12:00:00.000Z",
+  "updatedAt": "2024-03-05T15:30:00.000Z",
+  "shippingLabelUrl": "https://shipping.collectpure.com/labels/12345.pdf",
+  "payoutMethod": "bank_transfer",
+  "lineItems": [
+    {
+      "id": 1001,
+      "productId": "550e8400-e29b-41d4-a716-446655440000",
+      "productTitle": "2006 20th Anniversary American Silver Eagle 3-Coin Set",
+      "variantTitle": "Pure Qualified",
+      "price": 239.99,
+      "quantity": 2,
+      "status": "shipped",
+      "spotPremium": 144.48,
+      "spotPremiumDollar": 141.83
+    },
+    {
+      "id": 1002,
+      "productId": "550e8400-e29b-41d4-a716-446655440001",
+      "productTitle": "1 oz Gold Bar - PAMP Suisse",
+      "variantTitle": "New",
+      "price": 1120.0,
+      "quantity": 1,
+      "status": "shipped",
+      "spotPremium": 3.5,
+      "spotPremiumDollar": 37.8
+    }
+  ],
+  "trackers": [
+    {
+      "status": "delivered",
+      "weight": 0.5,
+      "carrier": "UPS",
+      "delivered": true,
+      "createdAt": "2024-03-02T09:00:00.000Z",
+      "lineItems": [
+        {
+          "id": 1001,
+          "quantity": 2
+        },
+        {
+          "id": 1002,
+          "quantity": 1
+        }
+      ],
+      "updatedAt": "2024-03-05T14:30:00.000Z",
+      "totalValue": 1599.98,
+      "statusDetail": "arrived_at_destination",
+      "trackingCode": "1Z999AA10123456784",
+      "service": "Ground",
+      "containerType": "Small Box",
+      "estDeliveryDate": "2024-03-05",
+      "currentLocation": "Customer's address"
+    }
+  ]
+}
+```
