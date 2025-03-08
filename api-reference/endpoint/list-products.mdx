@@ -15,6 +15,44 @@ Retrieve a paginated list of products. This endpoint returns an array of product
   Maximum number of items to return per page
 </ParamField>
 
+## Filter Query Parameters
+
+<ParamField query="categoryId" type="integer">
+  Filter products by category ID
+</ParamField>
+
+<ParamField query="subCategoryId" type="integer">
+  Filter products by subcategory ID
+</ParamField>
+
+<ParamField query="certificateProviderId" type="integer">
+  Filter products by certificate provider ID
+</ParamField>
+
+<ParamField query="manufacturerId" type="integer">
+  Filter products by manufacturer ID
+</ParamField>
+
+<ParamField query="attributeIds" type="string">
+  Filter products by attribute IDs (comma-separated list)
+</ParamField>
+
+<ParamField query="material" type="string">
+  Filter products by material (Gold, Silver, Platinum, Palladium, Bitcoin)
+</ParamField>
+
+<ParamField query="isCertified" type="boolean">
+  Filter products by certification status
+</ParamField>
+
+<ParamField query="isIra" type="boolean">
+  Filter products by IRA eligibility
+</ParamField>
+
+<ParamField query="title" type="string">
+  Search in product title (full-text search)
+</ParamField>
+
 ## Response Example
 
 ```json
