@@ -46,7 +46,7 @@
             "pages": ["api-reference/endpoint/get-spot-prices"]
           },
           {
-            "group": "Orders",
+            "group": "Purchase Orders",
             "pages": ["api-reference/endpoint/get-order"]
           },
           {
