@@ -1,0 +1,62 @@
+---
+title: "Get Sale Order"
+openapi: "GET /v1/sale-order/{id}"
+---
+
+Retrieve detailed information about a specific sale order by its ID. This endpoint returns comprehensive data about the order including its status, financial details, and line items.
+
+## Response Example
+
+```json
+{
+  "status": "order_complete",
+  "subtotal": 1599.98,
+  "total": 1699.98,
+  "salesTax": 0,
+  "currency": "USD",
+  "processingFee": 100,
+  "shipping": 0,
+  "paymentStatus": "paid",
+  "paymentMethod": "credit_card",
+  "createdAt": "2024-03-01T12:00:00.000Z",
+  "updatedAt": "2024-03-05T15:30:00.000Z",
+  "lineItems": [
+    {
+      "id": 1001,
+      "productId": "550e8400-e29b-41d4-a716-446655440000",
+      "productTitle": "2006 20th Anniversary American Silver Eagle 3-Coin Set",
+      "variantTitle": "Pure Qualified",
+      "price": 239.99,
+      "quantity": 2,
+      "status": "shipped",
+      "trackingNumber": "1Z999AA10123456784",
+      "shippingService": "UPS Ground",
+      "spotPremium": 144.48,
+      "spotPremiumDollar": 141.83,
+      "sellerId": "a1b2c3d4-e5f6-7890-abcd-1234567890ab",
+      "sellerName": "Silver Coin Dealers Inc.",
+      "sellerShipped": true,
+      "receivedForInspection": true,
+      "passedInspection": true
+    },
+    {
+      "id": 1002,
+      "productId": "550e8400-e29b-41d4-a716-446655440001",
+      "productTitle": "1 oz Gold Bar - PAMP Suisse",
+      "variantTitle": "New",
+      "price": 1120.0,
+      "quantity": 1,
+      "status": "shipped",
+      "trackingNumber": "1Z999AA10123456784",
+      "shippingService": "UPS Ground",
+      "spotPremium": 3.5,
+      "spotPremiumDollar": 37.8,
+      "sellerId": "a1b2c3d4-e5f6-7890-abcd-1234567890ab",
+      "sellerName": "Silver Coin Dealers Inc.",
+      "sellerShipped": true,
+      "receivedForInspection": true,
+      "passedInspection": true
+    }
+  ]
+}
+```

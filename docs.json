@@ -50,6 +50,10 @@
             "pages": ["api-reference/endpoint/get-order"]
           },
           {
+            "group": "Sale Orders",
+            "pages": ["api-reference/endpoint/get-sale-order"]
+          },
+          {
             "group": "Authentication",
             "pages": ["api-reference/endpoint/protected"]
           }

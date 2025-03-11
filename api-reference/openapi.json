@@ -23,7 +23,9 @@
     "/v1/product/{id}": {
       "get": {
         "summary": "Get a single product by ID",
-        "tags": ["products"],
+        "tags": [
+          "products"
+        ],
         "description": "Returns detailed information about a specific product",
         "parameters": [
           {
@@ -304,7 +306,9 @@
     "/v1/products/{ids}": {
       "get": {
         "summary": "Get multiple products by IDs",
-        "tags": ["products"],
+        "tags": [
+          "products"
+        ],
         "description": "Returns detailed information about multiple products specified by comma-separated IDs",
         "parameters": [
           {
@@ -593,7 +597,9 @@
     "/v1/products": {
       "get": {
         "summary": "List products with pagination and filtering",
-        "tags": ["products"],
+        "tags": [
+          "products"
+        ],
         "description": "Returns a paginated and filtered list of products",
         "parameters": [
           {
@@ -973,7 +979,9 @@
     "/v1/product/sku/{sku}": {
       "get": {
         "summary": "Get a single product by SKU",
-        "tags": ["products"],
+        "tags": [
+          "products"
+        ],
         "description": "Returns detailed information about a specific product using its SKU",
         "parameters": [
           {
@@ -1263,7 +1271,9 @@
     "/v1/products/categories": {
       "get": {
         "summary": "Get all product categories",
-        "tags": ["products"],
+        "tags": [
+          "products"
+        ],
         "description": "Returns a list of all product categories with their IDs and titles",
         "security": [
           {
@@ -1320,7 +1330,9 @@
     "/v1/products/subcategories": {
       "get": {
         "summary": "Get all product subcategories",
-        "tags": ["products"],
+        "tags": [
+          "products"
+        ],
         "description": "Returns a list of all product subcategories with their IDs and titles",
         "security": [
           {
@@ -1377,7 +1389,9 @@
     "/v1/products/manufacturers": {
       "get": {
         "summary": "Get all product manufacturers",
-        "tags": ["products"],
+        "tags": [
+          "products"
+        ],
         "description": "Returns a list of all product manufacturers with their IDs and titles",
         "security": [
           {
@@ -1434,7 +1448,9 @@
     "/v1/products/certificate-providers": {
       "get": {
         "summary": "Get all certificate providers",
-        "tags": ["products"],
+        "tags": [
+          "products"
+        ],
         "description": "Returns a list of all certificate providers with their IDs and titles",
         "security": [
           {
@@ -1491,7 +1507,9 @@
     "/v1/products/attributes": {
       "get": {
         "summary": "Get all product attributes",
-        "tags": ["products"],
+        "tags": [
+          "products"
+        ],
         "description": "Returns a list of all product attributes with their IDs and titles",
         "security": [
           {
@@ -1552,7 +1570,9 @@
     "/v1/products/materials": {
       "get": {
         "summary": "Get all product materials",
-        "tags": ["products"],
+        "tags": [
+          "products"
+        ],
         "description": "Returns a list of all product materials",
         "security": [
           {
@@ -1596,7 +1616,9 @@
     "/v1/spot-prices": {
       "get": {
         "summary": "Get current spot prices for all materials",
-        "tags": ["marketplace"],
+        "tags": [
+          "marketplace"
+        ],
         "description": "Returns the current spot prices, bid/ask spreads, and market status for all precious metals",
         "security": [
           {
@@ -1667,7 +1689,9 @@
     "/v1/order/{id}": {
       "get": {
         "summary": "Get a purchase order by ID",
-        "tags": ["orders"],
+        "tags": [
+          "orders"
+        ],
         "description": "Returns detailed information about a specific purchase order",
         "parameters": [
           {
@@ -1949,10 +1973,210 @@
         }
       }
     },
+    "/v1/sale-order/{id}": {
+      "get": {
+        "summary": "Get a sale order by ID",
+        "tags": [
+          "orders"
+        ],
+        "description": "Returns detailed information about a specific sale order",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "Sale Order ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "description": "Order status"
+                    },
+                    "subtotal": {
+                      "type": "number",
+                      "description": "Order subtotal in dollars"
+                    },
+                    "total": {
+                      "type": "number",
+                      "description": "Order total in dollars"
+                    },
+                    "salesTax": {
+                      "type": "number",
+                      "description": "Sales tax in dollars"
+                    },
+                    "currency": {
+                      "type": "string",
+                      "description": "Currency code"
+                    },
+                    "processingFee": {
+                      "type": "number",
+                      "description": "Processing fee in dollars"
+                    },
+                    "shipping": {
+                      "type": "number",
+                      "description": "Shipping cost in dollars"
+                    },
+                    "paymentStatus": {
+                      "type": "string",
+                      "description": "Payment status of the order"
+                    },
+                    "paymentMethod": {
+                      "type": "string",
+                      "description": "Payment method used for the order"
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Creation timestamp"
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Last update timestamp"
+                    },
+                    "lineItems": {
+                      "type": "array",
+                      "description": "Line items in the order",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "number",
+                            "description": "Line item ID"
+                          },
+                          "productId": {
+                            "type": "string",
+                            "description": "Product ID"
+                          },
+                          "productTitle": {
+                            "type": "string",
+                            "description": "Product title"
+                          },
+                          "variantTitle": {
+                            "type": "string",
+                            "description": "Variant title"
+                          },
+                          "price": {
+                            "type": "number",
+                            "description": "Price in dollars"
+                          },
+                          "quantity": {
+                            "type": "number",
+                            "description": "Quantity ordered"
+                          },
+                          "status": {
+                            "type": "string",
+                            "description": "Line item status"
+                          },
+                          "trackingNumber": {
+                            "type": "string",
+                            "description": "Shipping tracking number"
+                          },
+                          "shippingService": {
+                            "type": "string",
+                            "description": "Shipping service used"
+                          },
+                          "spotPremium": {
+                            "type": "number",
+                            "description": "Spot premium percentage"
+                          },
+                          "spotPremiumDollar": {
+                            "type": "number",
+                            "description": "Spot premium in dollars"
+                          },
+                          "sellerId": {
+                            "type": "string",
+                            "description": "Seller organization ID"
+                          },
+                          "sellerName": {
+                            "type": "string",
+                            "description": "Seller organization name"
+                          },
+                          "sellerShipped": {
+                            "type": "boolean",
+                            "description": "Whether the seller has shipped the item"
+                          },
+                          "receivedForInspection": {
+                            "type": "boolean",
+                            "description": "Whether the item has been received for inspection"
+                          },
+                          "passedInspection": {
+                            "type": "boolean",
+                            "description": "Whether the item passed inspection"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/v1/protected": {
       "get": {
         "summary": "Protected endpoint requiring authentication",
-        "tags": ["auth"],
+        "tags": [
+          "auth"
+        ],
         "description": "A test endpoint that requires a valid API key to access",
         "security": [
           {
