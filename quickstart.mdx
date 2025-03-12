@@ -10,24 +10,60 @@ This guide will help you get started with the Pure API quickly. Follow these ste
 Before you begin, make sure you have:
 
 1. An API key from Pure (contact us at [support@collectpure.com](mailto:support@collectpure.com) to request one)
+   OR OAuth credentials if you're using OAuth authentication
 2. A tool for making HTTP requests (like cURL, Postman, or your preferred programming language)
 
 ## Authentication
 
-All API requests require authentication using your API key. Include your key in the `x-api-key` header with each request:
+The Pure API supports two authentication methods:
+
+### API Key Authentication
+
+For simple integrations, you can authenticate using your API key. Include your key in the `x-api-key` header with each request:
 
 ```bash
 curl -X GET "https://public.api.collectpure.com/v1/protected" \
   -H "x-api-key: YOUR_API_KEY"
 ```
 
-## Making Your First Request
+### OAuth Authentication
 
-Let's verify your API key is working by making a request to the authentication test endpoint:
+For more secure integrations, you can use OAuth authentication. First, obtain an access token:
+
+```bash
+curl -X POST "https://public.api.collectpure.com/v1/oauth/token" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "code": "AUTHORIZATION_CODE",
+    "public_key": "YOUR_PUBLIC_KEY",
+    "secret_key": "YOUR_SECRET_KEY",
+    "redirect_url": "YOUR_REDIRECT_URL"
+  }'
+```
+
+Then use the token in subsequent requests with these headers:
 
 ```bash
 curl -X GET "https://public.api.collectpure.com/v1/protected" \
+  -H "x-auth-token: YOUR_ACCESS_TOKEN" \
+  -H "x-public-key: YOUR_PUBLIC_KEY" \
+  -H "x-secret-key: YOUR_SECRET_KEY"
+```
+
+## Making Your First Request
+
+Let's verify your authentication is working by making a request to the authentication test endpoint:
+
+```bash
+# Using API Key
+curl -X GET "https://public.api.collectpure.com/v1/protected" \
   -H "x-api-key: YOUR_API_KEY"
+
+# OR using OAuth
+curl -X GET "https://public.api.collectpure.com/v1/protected" \
+  -H "x-auth-token: YOUR_ACCESS_TOKEN" \
+  -H "x-public-key: YOUR_PUBLIC_KEY" \
+  -H "x-secret-key: YOUR_SECRET_KEY"
 ```
 
 If successful, you should receive a response like:
@@ -78,6 +114,8 @@ You can adjust the `offset` and `limit` parameters to control pagination.
 
 ### JavaScript/Node.js
 
+#### Using API Key
+
 ```javascript
 const axios = require("axios");
 
@@ -101,7 +139,38 @@ async function getSpotPrices() {
 getSpotPrices();
 ```
 
+#### Using OAuth
+
+```javascript
+const axios = require("axios");
+
+const AUTH_TOKEN = "YOUR_ACCESS_TOKEN";
+const PUBLIC_KEY = "YOUR_PUBLIC_KEY";
+const SECRET_KEY = "YOUR_SECRET_KEY";
+const BASE_URL = "https://public.api.collectpure.com";
+
+async function getSpotPrices() {
+  try {
+    const response = await axios.get(`${BASE_URL}/v1/spot-prices`, {
+      headers: {
+        "x-auth-token": AUTH_TOKEN,
+        "x-public-key": PUBLIC_KEY,
+        "x-secret-key": SECRET_KEY,
+      },
+    });
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching spot prices:", error.message);
+  }
+}
+
+getSpotPrices();
+```
+
 ### Python
+
+#### Using API Key
 
 ```python
 import requests
@@ -112,6 +181,35 @@ BASE_URL = 'https://public.api.collectpure.com'
 def get_spot_prices():
     headers = {
         'x-api-key': API_KEY
+    }
+    response = requests.get(f'{BASE_URL}/v1/spot-prices', headers=headers)
+
+    if response.status_code == 200:
+        return response.json()
+    else:
+        print(f"Error: {response.status_code}")
+        print(response.text)
+        return None
+
+spot_prices = get_spot_prices()
+print(spot_prices)
+```
+
+#### Using OAuth
+
+```python
+import requests
+
+AUTH_TOKEN = 'YOUR_ACCESS_TOKEN'
+PUBLIC_KEY = 'YOUR_PUBLIC_KEY'
+SECRET_KEY = 'YOUR_SECRET_KEY'
+BASE_URL = 'https://public.api.collectpure.com'
+
+def get_spot_prices():
+    headers = {
+        'x-auth-token': AUTH_TOKEN,
+        'x-public-key': PUBLIC_KEY,
+        'x-secret-key': SECRET_KEY
     }
     response = requests.get(f'{BASE_URL}/v1/spot-prices', headers=headers)
 

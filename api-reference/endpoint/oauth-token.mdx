@@ -1,0 +1,67 @@
+---
+title: "OAuth Token"
+openapi: "POST /v1/oauth/token"
+---
+
+Exchange an OAuth authorization code for an access token. This endpoint allows you to obtain an authentication token that can be used for subsequent API requests.
+
+## Request Body
+
+<ParamField body="code" type="string" required>
+  The authorization code received from the OAuth provider
+</ParamField>
+
+<ParamField body="public_key" type="string" required>
+  The public key for the OAuth application
+</ParamField>
+
+<ParamField body="secret_key" type="string" required>
+  The secret key for the OAuth application
+</ParamField>
+
+<ParamField body="redirect_url" type="string" required>
+  The redirect URL used in the initial authorization request
+</ParamField>
+
+## Response Example
+
+```json
+{
+  "access_token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InB1cmUtand0LWtleSJ9...",
+  "token_type": "bearer",
+  "expires_in": 3600,
+  "id_token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InB1cmUtand0LWtleSJ9...",
+  "refresh_token": "rt_abc123def456ghi789"
+}
+```
+
+## Using the Token
+
+After obtaining the token, include it in subsequent API requests using the following headers:
+
+```json
+"x-auth-token": "your-access-token"
+"x-public-key": "your-public-key"
+"x-secret-key": "your-secret-key"
+```
+
+The `id_token` is included in the response when the `openid` scope is granted, and the `refresh_token` is included when the `offline_access` scope is granted.
+
+## Error Responses
+
+If the request is invalid or authentication fails, the API will return an error response:
+
+```json
+{
+  "error": "invalid_request",
+  "error_description": "The authorization code is invalid or has expired"
+}
+```
+
+Common error codes include:
+
+- `invalid_request`: The request is missing a required parameter or is otherwise malformed
+- `invalid_client`: Client authentication failed
+- `invalid_grant`: The authorization code is invalid or has expired
+- `unauthorized_client`: The client is not authorized to use this grant type
+- `server_error`: An unexpected error occurred on the server

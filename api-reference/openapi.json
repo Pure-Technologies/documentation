@@ -15,6 +15,24 @@
         "name": "x-api-key",
         "in": "header",
         "description": "API key for authentication"
+      },
+      "authToken": {
+        "type": "apiKey",
+        "name": "x-auth-token",
+        "in": "header",
+        "description": "OAuth token for oauth authentication"
+      },
+      "publicKey": {
+        "type": "apiKey",
+        "name": "x-public-key",
+        "in": "header",
+        "description": "Public key for oauth authentication"
+      },
+      "secretKey": {
+        "type": "apiKey",
+        "name": "x-secret-key",
+        "in": "header",
+        "description": "Secret key for oauth authentication"
       }
     },
     "schemas": {}
@@ -23,9 +41,7 @@
     "/v1/product/{id}": {
       "get": {
         "summary": "Get a single product by ID",
-        "tags": [
-          "products"
-        ],
+        "tags": ["products"],
         "description": "Returns detailed information about a specific product",
         "parameters": [
           {
@@ -306,9 +322,7 @@
     "/v1/products/{ids}": {
       "get": {
         "summary": "Get multiple products by IDs",
-        "tags": [
-          "products"
-        ],
+        "tags": ["products"],
         "description": "Returns detailed information about multiple products specified by comma-separated IDs",
         "parameters": [
           {
@@ -597,9 +611,7 @@
     "/v1/products": {
       "get": {
         "summary": "List products with pagination and filtering",
-        "tags": [
-          "products"
-        ],
+        "tags": ["products"],
         "description": "Returns a paginated and filtered list of products",
         "parameters": [
           {
@@ -979,9 +991,7 @@
     "/v1/product/sku/{sku}": {
       "get": {
         "summary": "Get a single product by SKU",
-        "tags": [
-          "products"
-        ],
+        "tags": ["products"],
         "description": "Returns detailed information about a specific product using its SKU",
         "parameters": [
           {
@@ -1271,9 +1281,7 @@
     "/v1/products/categories": {
       "get": {
         "summary": "Get all product categories",
-        "tags": [
-          "products"
-        ],
+        "tags": ["products"],
         "description": "Returns a list of all product categories with their IDs and titles",
         "security": [
           {
@@ -1330,9 +1338,7 @@
     "/v1/products/subcategories": {
       "get": {
         "summary": "Get all product subcategories",
-        "tags": [
-          "products"
-        ],
+        "tags": ["products"],
         "description": "Returns a list of all product subcategories with their IDs and titles",
         "security": [
           {
@@ -1389,9 +1395,7 @@
     "/v1/products/manufacturers": {
       "get": {
         "summary": "Get all product manufacturers",
-        "tags": [
-          "products"
-        ],
+        "tags": ["products"],
         "description": "Returns a list of all product manufacturers with their IDs and titles",
         "security": [
           {
@@ -1448,9 +1452,7 @@
     "/v1/products/certificate-providers": {
       "get": {
         "summary": "Get all certificate providers",
-        "tags": [
-          "products"
-        ],
+        "tags": ["products"],
         "description": "Returns a list of all certificate providers with their IDs and titles",
         "security": [
           {
@@ -1507,9 +1509,7 @@
     "/v1/products/attributes": {
       "get": {
         "summary": "Get all product attributes",
-        "tags": [
-          "products"
-        ],
+        "tags": ["products"],
         "description": "Returns a list of all product attributes with their IDs and titles",
         "security": [
           {
@@ -1570,9 +1570,7 @@
     "/v1/products/materials": {
       "get": {
         "summary": "Get all product materials",
-        "tags": [
-          "products"
-        ],
+        "tags": ["products"],
         "description": "Returns a list of all product materials",
         "security": [
           {
@@ -1616,9 +1614,7 @@
     "/v1/spot-prices": {
       "get": {
         "summary": "Get current spot prices for all materials",
-        "tags": [
-          "marketplace"
-        ],
+        "tags": ["marketplace"],
         "description": "Returns the current spot prices, bid/ask spreads, and market status for all precious metals",
         "security": [
           {
@@ -1689,9 +1685,7 @@
     "/v1/order/{id}": {
       "get": {
         "summary": "Get a purchase order by ID",
-        "tags": [
-          "orders"
-        ],
+        "tags": ["orders"],
         "description": "Returns detailed information about a specific purchase order",
         "parameters": [
           {
@@ -1976,9 +1970,7 @@
     "/v1/sale-order/{id}": {
       "get": {
         "summary": "Get a sale order by ID",
-        "tags": [
-          "orders"
-        ],
+        "tags": ["orders"],
         "description": "Returns detailed information about a specific sale order",
         "parameters": [
           {
@@ -2171,12 +2163,150 @@
         }
       }
     },
+    "/v1/oauth/token": {
+      "post": {
+        "summary": "Get an authorization token from OAuth code",
+        "tags": ["auth"],
+        "description": "Exchange an OAuth authorization code for an access token",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "code",
+                  "public_key",
+                  "secret_key",
+                  "redirect_url"
+                ],
+                "properties": {
+                  "code": {
+                    "type": "string",
+                    "description": "The authorization code received from the OAuth provider"
+                  },
+                  "public_key": {
+                    "type": "string",
+                    "description": "The public key (client ID) for the OAuth application"
+                  },
+                  "secret_key": {
+                    "type": "string",
+                    "description": "The secret key (client secret) for the OAuth application"
+                  },
+                  "redirect_url": {
+                    "type": "string",
+                    "description": "The redirect URL used in the initial authorization request"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "access_token": {
+                      "type": "string",
+                      "description": "JWT access token signed with the project's JWKS"
+                    },
+                    "token_type": {
+                      "type": "string",
+                      "enum": ["bearer"],
+                      "description": "Type of token issued"
+                    },
+                    "expires_in": {
+                      "type": "integer",
+                      "description": "Token expiration time in seconds (defaults to 3600 seconds/1 hour)"
+                    },
+                    "id_token": {
+                      "type": "string",
+                      "description": "JWT ID token returned when openid scope is granted"
+                    },
+                    "refresh_token": {
+                      "type": "string",
+                      "description": "Refresh token returned when offline_access scope is granted"
+                    }
+                  },
+                  "required": ["access_token", "token_type", "expires_in"]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error code"
+                    },
+                    "error_description": {
+                      "type": "string",
+                      "description": "Human-readable error description"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error code"
+                    },
+                    "error_description": {
+                      "type": "string",
+                      "description": "Human-readable error description"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error code"
+                    },
+                    "error_description": {
+                      "type": "string",
+                      "description": "Human-readable error description"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/v1/protected": {
       "get": {
         "summary": "Protected endpoint requiring authentication",
-        "tags": [
-          "auth"
-        ],
+        "tags": ["auth"],
         "description": "A test endpoint that requires a valid API key to access",
         "security": [
           {
@@ -2234,6 +2364,11 @@
   "security": [
     {
       "apiKey": []
+    },
+    {
+      "authToken": [],
+      "publicKey": [],
+      "secretKey": []
     }
   ],
   "tags": [
@@ -2244,6 +2379,10 @@
     {
       "name": "marketplace",
       "description": "Marketplace data endpoints"
+    },
+    {
+      "name": "orders",
+      "description": "Order related endpoints"
     },
     {
       "name": "auth",

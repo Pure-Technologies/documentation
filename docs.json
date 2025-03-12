@@ -55,7 +55,10 @@
           },
           {
             "group": "Authentication",
-            "pages": ["api-reference/endpoint/protected"]
+            "pages": [
+              "api-reference/endpoint/protected",
+              "api-reference/endpoint/oauth-token"
+            ]
           }
         ]
       }

@@ -9,11 +9,27 @@ The Pure Public API provides access to marketplace data including products, spot
 
 ## Authentication
 
-All API endpoints are authenticated using API keys. You need to include your API key in the `x-api-key` header with each request.
+The Pure API supports two authentication methods:
+
+### API Key Authentication
+
+Most endpoints can be authenticated using API keys. You need to include your API key in the `x-api-key` header with each request.
 
 ```json
 "x-api-key": "00000000-0000-0000-0000-000000000000"
 ```
+
+### OAuth Authentication
+
+For more secure integrations, you can use OAuth authentication. This requires three headers:
+
+```json
+"x-auth-token": "oauth-token"
+"x-public-key": "your-public-key"
+"x-secret-key": "your-secret-key"
+```
+
+To obtain an OAuth token, use the `/v1/oauth/token` endpoint. See the [OAuth Token](#) documentation for details.
 
 ## Base URL
 
@@ -41,7 +57,7 @@ The Pure Public API provides the following categories of endpoints:
 - **Marketplace**: Get real-time spot prices for precious metals.
 - **Purchase Orders**: Retrieve information about purchase orders.
 - **Sale Orders**: Retrieve information about sale orders.
-- **Authentication**: Test your API key authentication.
+- **Authentication**: Authentication-related endpoints, including OAuth token generation.
 
 ## Rate Limits
 
